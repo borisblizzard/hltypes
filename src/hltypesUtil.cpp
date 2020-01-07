@@ -236,9 +236,34 @@ hltypes::String hstackTrace(int maxFrames)
 	frame.maxFrames = maxFrames;
 	_Unwind_Backtrace(&_traceFunction, &frame);
 	hltypes::Array<hltypes::String> calls;
+	hltypes::Array<hltypes::String> data;
 	for_iter (i, 1, frame.addresses.size()) // skipping this function call from the stack trace
 	{
-		calls += hsprintf("%p - %s\n", frame.addresses[i], frame.names[i].cStr());
+		data = frame.names[i].split(' ', -1, false);
+		if (data.size() > 0)
+		{
+			if (data.size() > 1)
+			{
+				calls += hsprintf("%s", data.first().cStr());
+				data = data[1].split('/', -1, false);
+				if (data.size() > 0)
+				{
+					calls += hsprintf(" (%s)\n", data.last().trimmedRight(')').cStr());
+				}
+				else
+				{
+					calls += "\n";
+				}
+			}
+			else
+			{
+				calls += hsprintf("%s\n", data.first().cStr());
+			}
+		}
+		else
+		{
+			calls += "???\n";
+		}
 	}
 	if (calls.size() > 0)
 	{
