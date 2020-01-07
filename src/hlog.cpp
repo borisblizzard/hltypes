@@ -64,19 +64,19 @@ namespace hltypes
 	bool Log::outputEnabled = true;
 	String Log::filename;
 	void (*Log::callbackFunction)(const String&, const String&) = NULL;
-	Mutex Log::mutex;
+	Mutex* Log::mutex = new Mutex("Log Mutex");
 	int Log::fileIndex = 0;
 	String Log::fileExtension;
 
 	void (*Log::getCallbackFunction())(const String&, const String&)
 	{
-		hmutex::ScopeLock lock(&Log::mutex);
+		hmutex::ScopeLock lock(Log::mutex);
 		return Log::callbackFunction;
 	}
 	
 	void Log::setCallbackFunction(void(*function)(const String&, const String&))
 	{
-		hmutex::ScopeLock lock(&Log::mutex);
+		hmutex::ScopeLock lock(Log::mutex);
 		Log::callbackFunction = function;
 	}
 	
@@ -91,7 +91,7 @@ namespace hltypes
 	void Log::setFilename(const String& filename, bool clearFile)
 	{
 		Log::filename = Dir::normalize(filename);
-		Mutex::ScopeLock lock(&Log::mutex);
+		Mutex::ScopeLock lock(Log::mutex);
 #ifdef _WIN32
 		if (clearFile)
 		{
@@ -159,7 +159,7 @@ namespace hltypes
 	void Log::finalize(bool clearFile)
 	{
 #ifdef _WIN32
-		Mutex::ScopeLock lock(&Log::mutex);
+		Mutex::ScopeLock lock(Log::mutex);
 		if (Log::filename == "" || !File::exists(Log::filename))
 		{
 			return;
@@ -235,7 +235,7 @@ namespace hltypes
 		{
 			return false;
 		}
-		Mutex::ScopeLock lock(&Log::mutex);
+		Mutex::ScopeLock lock(Log::mutex);
 		if (outputEnabled)
 		{
 			_platformPrint(tag, message, LEVEL_PLATFORM(level));

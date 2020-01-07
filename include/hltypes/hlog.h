@@ -148,8 +148,9 @@ namespace hltypes
 		static String filename;
 		/// @brief Callback function for logging.
 		static void (*callbackFunction)(const String&, const String&);
-		/// @brief Mutex to ensure thread-safe handling
-		static Mutex mutex;
+		/// @brief Mutex to ensure thread-safe handling.
+		/// @note Using a heap-allocated object here as some OSes (namely Android on Huawei devices) can destroy stack-allocated objects in case of a crash before the app has actually exited.
+		static Mutex* mutex;
 		/// @brief Used for segmented Win32 log files.
 		static int fileIndex;
 		/// @brief Used for segmented Win32 log files.
@@ -159,16 +160,16 @@ namespace hltypes
 		/// @note Forces this to be a static class.
 		inline Log() { }
 
+		/// @brief Used for segmented Win32 log files.
+		static String _makeFilename(const String& filename, int index);
+		/// @brief Used for segmented Win32 log files.
+		static String _makeCurrentFilename(const String& filename);
 		/// @brief Executes the actual message loggging.
 		/// @param[in] tag The message tag.
 		/// @param[in] message The message to log.
 		/// @param[in] level Log level (required for Android).
 		/// @return True if the message could be logged.
 		static bool _systemLog(const String& tag, const String& message, int level);
-		/// @brief Used for segmented Win32 log files.
-		static String _makeFilename(const String& filename, int index);
-		/// @brief Used for segmented Win32 log files.
-		static String _makeCurrentFilename(const String& filename);
 
 	};
 }
