@@ -73,7 +73,11 @@ namespace hltypes
 		/// @param[in] count How many version values should be used (between 1 and 4).
 		/// @return A String representation of the Version.
 		String toString(int count = 3) const;
-		
+		/// @brief Creates a String representation of the Version without trailing zeros.
+		/// @param[in] count How many version values should be used (between 1 and 4).
+		/// @return A String representation of the Version without trailing zeros.
+		String toCompactString(int count = 3) const;
+
 		/// @brief Checks if this Version is greater than another Version.
 		/// @param[in] other Other Version.
 		/// @return True if this Version is greater than another Version.

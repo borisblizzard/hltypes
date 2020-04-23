@@ -107,6 +107,24 @@ namespace hltypes
 		return result;
 	}
 	
+	hstr Version::toCompactString(int count) const
+	{
+		hstr result = hstr(this->major);
+		if (count > 1 && this->minor > 0 || count > 2 && this->revision > 0 || count > 3 && this->build > 0)
+		{
+			result += "." + hstr(this->minor);
+			if (count > 2 && this->revision > 0 || count > 3 && this->build > 0)
+			{
+				result += "." + hstr(this->revision);
+				if (count > 3 && this->build > 0)
+				{
+					result += "." + hstr(this->build);
+				}
+			}
+		}
+		return result;
+	}
+
 	bool Version::operator<(const Version& other) const
 	{
 		return (this->major < other.major ||
