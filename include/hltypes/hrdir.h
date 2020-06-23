@@ -17,6 +17,7 @@
 #include "hdbase.h"
 #include "hltypesExport.h"
 #include "hmap.h"
+#include "hmutex.h"
 #include "hresource.h"
 #include "hstring.h"
 
@@ -66,6 +67,12 @@ namespace hltypes
 		/// @brief Cache for file entries.
 		/// @note This is usually only used when ZIP resources are being used.
 		static Map<String, Array<String> > cacheFiles;
+		/// @brief Mutex for directory entries cache.
+		/// @note This is usually only used when ZIP resources are being used.
+		static Mutex mutexCacheDirectories;
+		/// @brief Mutex for file entries cache.
+		/// @note This is usually only used when ZIP resources are being used.
+		static Mutex mutexCacheFiles;
 
 		/// @brief Basic constructor.
 		/// @note Forces this to be a static class.

@@ -20,6 +20,8 @@ namespace hltypes
 {
 	Map<String, Array<String> > ResourceDir::cacheDirectories;
 	Map<String, Array<String> > ResourceDir::cacheFiles;
+	Mutex ResourceDir::mutexCacheDirectories;
+	Mutex ResourceDir::mutexCacheFiles;
 
 	bool ResourceDir::exists(const String& dirName, bool caseSensitive)
 	{
@@ -93,12 +95,14 @@ namespace hltypes
 #ifdef _ZIPRESOURCE
 		if (Resource::mountedArchives.size() > 0)
 		{
+			Mutex::ScopeLock lock(&ResourceDir::mutexCacheDirectories);
 			if (ResourceDir::cacheDirectories.hasKey(name))
 			{
 				result = ResourceDir::cacheDirectories[name];
 			}
 			else
 			{
+				lock.release();
 				Array<String> files = zip::getFiles();
 				String current;
 				foreach (String, it, files)
@@ -110,6 +114,7 @@ namespace hltypes
 					}
 				}
 				result.removeDuplicates();
+				lock.acquire(&ResourceDir::mutexCacheDirectories);
 				ResourceDir::cacheDirectories[name] = result;
 			}
 		}
@@ -132,12 +137,14 @@ namespace hltypes
 #ifdef _ZIPRESOURCE
 		if (Resource::mountedArchives.size() > 0)
 		{
+			Mutex::ScopeLock lock(&ResourceDir::mutexCacheFiles);
 			if (ResourceDir::cacheFiles.hasKey(name))
 			{
 				result = ResourceDir::cacheFiles[name];
 			}
 			else
 			{
+				lock.release();
 				Array<String> files = zip::getFiles();
 				String current;
 				foreach (String, it, files)
@@ -149,6 +156,7 @@ namespace hltypes
 					}
 				}
 				result.removeDuplicates();
+				lock.acquire(&ResourceDir::mutexCacheFiles);
 				ResourceDir::cacheFiles[name] = result;
 			}
 		}
