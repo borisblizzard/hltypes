@@ -140,7 +140,7 @@ namespace hltypes
 			return false;
 		}
 		std::wstring wString = string.wStr();
-		int size = (wString.size() + 1) * sizeof(wchar_t);
+		int size = (int)((wString.size() + 1) * sizeof(wchar_t));
 		HGLOBAL hGlobal = GlobalAlloc(GMEM_FIXED | GMEM_ZEROINIT, size);
 		memcpy((wchar_t*)hGlobal, wString.c_str(), size);
 		if (::SetClipboardData(CF_UNICODETEXT, hGlobal) == NULL)

@@ -1335,7 +1335,7 @@ namespace hltypes
 			if (thisString(i, -1).startsWith(string))
 			{
 				++result;
-				i += strlen(string) - 1;
+				i += (int)strlen(string) - 1;
 			}
 		}
 		return result;
