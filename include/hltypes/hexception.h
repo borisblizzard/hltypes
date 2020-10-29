@@ -203,7 +203,7 @@ namespace hltypes
 
 	};
 	/// @brief Alias for simpler code.
-	#define ResourceAlreadyExistsException(type, name, container) hltypes::_ResourceNotExistsException(type, name, container, __FILE__, __LINE__)
+	#define ResourceAlreadyExistsException(type, name, container) hltypes::_ResourceAlreadyExistsException(type, name, container, __FILE__, __LINE__)
 	
 	/// @brief Defines an index-error exception.
 	class hltypesExport _ContainerIndexException : public _Exception

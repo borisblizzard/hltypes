@@ -129,13 +129,13 @@ namespace hltypes
 	_ResourceNotExistsException::_ResourceNotExistsException(const String& type, const String& name, const String& container, const char* sourceFile, int lineNumber) :
 		_Exception("", sourceFile, lineNumber)
 	{
-		this->_setInternalMessage("'" + name + "' '" + type + "' does not exist in '" + container + "'", sourceFile, lineNumber);
+		this->_setInternalMessage("'" + type + "' '" + name + "' does not exist in '" + container + "'", sourceFile, lineNumber);
 	}
 
 	_ResourceAlreadyExistsException::_ResourceAlreadyExistsException(const String& type, const String& name, const String& container, const char* sourceFile, int lineNumber) :
 		_Exception("", sourceFile, lineNumber)
 	{
-		this->_setInternalMessage("'" + name + "' '" + type + "' already exists in '" + container + "'", sourceFile, lineNumber);
+		this->_setInternalMessage("'" + type + "' '" + name + "' already exists in '" + container + "'", sourceFile, lineNumber);
 	}
 
 	_ContainerIndexException::_ContainerIndexException(int index, const char* sourceFile, int lineNumber) :
