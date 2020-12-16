@@ -41,6 +41,10 @@ public: \
 		values.sort(); \
 		return values[(values.indexOf(*this) + values.size() - 1) % values.size()]; \
 	} \
+	inline bool isValid() \
+	{ \
+		return _instances.hasKey((unsigned int)this->value); \
+	} \
 	inline bool operator<(const classe& other) const { return (this->value < other.value); } \
 	inline bool operator>(const classe& other) const { return (this->value > other.value); } \
 	inline bool operator<=(const classe& other) const { return (this->value <= other.value); } \
