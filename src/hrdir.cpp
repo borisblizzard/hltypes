@@ -35,7 +35,10 @@ namespace hltypes
 			return true;
 		}
 #ifdef _ZIPRESOURCE
-		if (Resource::mountedArchives.size() > 0)
+		Mutex::ScopeLock lock(&Resource::mutexMountedArchives);
+		bool anyMounted = (Resource::mountedArchives.size() > 0);
+		lock.release();
+		if (anyMounted)
 		{
 			// this approach is used, because sometimes ZIP files don't enumerate their directories
 			if (ResourceDir::directories(ResourceDir::baseDir(name)).has(ResourceDir::baseName(name)))
@@ -77,7 +80,10 @@ namespace hltypes
 		String name = ResourceDir::normalize(dirName);
 		Array<String> result;
 		result = ResourceDir::directories(name, false) + ResourceDir::files(name, false);
-		if (Resource::mountedArchives.size() == 0)
+		Mutex::ScopeLock lock(&Resource::mutexMountedArchives);
+		bool anyMounted = (Resource::mountedArchives.size() == 0);
+		lock.release();
+		if (anyMounted)
 		{
 			result.removeDuplicates();
 		}
@@ -93,9 +99,12 @@ namespace hltypes
 		String name = ResourceDir::normalize(dirName);
 		Array<String> result;
 #ifdef _ZIPRESOURCE
-		if (Resource::mountedArchives.size() > 0)
+		Mutex::ScopeLock lock(&Resource::mutexMountedArchives);
+		bool anyMounted = (Resource::mountedArchives.size() > 0);
+		lock.release();
+		if (anyMounted)
 		{
-			Mutex::ScopeLock lock(&ResourceDir::mutexCacheDirectories);
+			lock.acquire(&ResourceDir::mutexCacheDirectories);
 			if (ResourceDir::cacheDirectories.hasKey(name))
 			{
 				result = ResourceDir::cacheDirectories[name];
@@ -117,6 +126,7 @@ namespace hltypes
 				lock.acquire(&ResourceDir::mutexCacheDirectories);
 				ResourceDir::cacheDirectories[name] = result;
 			}
+			lock.release();
 		}
 		else
 #endif
@@ -135,9 +145,12 @@ namespace hltypes
 		String name = ResourceDir::normalize(dirName);
 		Array<String> result;
 #ifdef _ZIPRESOURCE
-		if (Resource::mountedArchives.size() > 0)
+		Mutex::ScopeLock lock(&Resource::mutexMountedArchives);
+		bool anyMounted = (Resource::mountedArchives.size() > 0);
+		lock.release();
+		if (anyMounted)
 		{
-			Mutex::ScopeLock lock(&ResourceDir::mutexCacheFiles);
+			lock.acquire(&ResourceDir::mutexCacheFiles);
 			if (ResourceDir::cacheFiles.hasKey(name))
 			{
 				result = ResourceDir::cacheFiles[name];
@@ -159,6 +172,7 @@ namespace hltypes
 				lock.acquire(&ResourceDir::mutexCacheFiles);
 				ResourceDir::cacheFiles[name] = result;
 			}
+			lock.release();
 		}
 #endif
 		if (result.size() == 0)

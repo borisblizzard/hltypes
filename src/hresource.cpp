@@ -21,6 +21,7 @@
 namespace hltypes
 {
 	Map<String, String> Resource::mountedArchives;
+	Mutex Resource::mutexMountedArchives;
 
 	bool Resource::mountArchive(const String& path, const String& archiveFilename, const String& cwd)
 	{
@@ -33,12 +34,14 @@ namespace hltypes
 		{
 			normalizedPath += "/";
 		}
+		Mutex::ScopeLock lock(&Resource::mutexMountedArchives);
 		if (Resource::mountedArchives.hasKey(normalizedPath))
 		{
 			Log::errorf(logTag, "Cannot mount archive filename '%s' to path '%s', the path is already mounted!", archiveFilename.cStr(), path.cStr());
 			return false;
 		}
 		Array<String> mounts = Resource::mountedArchives.keys() / "";
+		lock.release();
 		foreach (String, it, mounts)
 		{
 			if (normalizedPath.startsWith(*it))
@@ -69,10 +72,16 @@ namespace hltypes
 			return false;
 		}
 		// extra mounting has to clear directory / file caches
+		lock.acquire(&ResourceDir::mutexCacheDirectories);
 		ResourceDir::cacheDirectories.clear();
+		lock.release();
+		lock.acquire(&ResourceDir::mutexCacheFiles);
 		ResourceDir::cacheFiles.clear();
+		lock.release();
 #endif
+		lock.acquire(&Resource::mutexMountedArchives);
 		Resource::mountedArchives[normalizedPath] = normalizedArchiveFilename;
+		lock.release();
 		static bool firstMount = true;
 		if (firstMount)
 		{
@@ -97,11 +106,13 @@ namespace hltypes
 		{
 			normalizedPath += "/";
 		}
+		Mutex::ScopeLock lock(&Resource::mutexMountedArchives);
 		if (!Resource::mountedArchives.hasKey(normalizedPath))
 		{
 			Log::errorf(logTag, "Cannot unmount path '%s', the path is not mounted!", path.cStr());
 			return false;
 		}
+		lock.release();
 #ifdef _ZIPRESOURCE
 		if (!zip::unmountArchive(normalizedPath))
 		{
@@ -109,9 +120,14 @@ namespace hltypes
 			return false;
 		}
 		// unmounting has to clear directory / file caches
+		lock.acquire(&ResourceDir::mutexCacheDirectories);
 		ResourceDir::cacheDirectories.clear();
+		lock.release();
+		lock.acquire(&ResourceDir::mutexCacheFiles);
 		ResourceDir::cacheFiles.clear();
+		lock.release();
 #endif
+		lock.acquire(&Resource::mutexMountedArchives);
 		Resource::mountedArchives.removeKey(normalizedPath);
 		return true;
 	}
@@ -134,7 +150,10 @@ namespace hltypes
 	void Resource::open(const String& filename)
 	{
 #ifdef _ZIPRESOURCE
-		if (Resource::mountedArchives.size() > 0)
+		Mutex::ScopeLock lock(&Resource::mutexMountedArchives);
+		bool anyMounted = (Resource::mountedArchives.size() > 0);
+		lock.release();
+		if (anyMounted)
 		{
 			if (this->_isOpen())
 			{
@@ -264,7 +283,10 @@ namespace hltypes
 	bool Resource::_zipExists(const String& filename, bool caseSensitive)
 	{
 #ifdef _ZIPRESOURCE
-		if (Resource::mountedArchives.size() > 0)
+		Mutex::ScopeLock lock(&Resource::mutexMountedArchives);
+		bool anyMounted = (Resource::mountedArchives.size() > 0);
+		lock.release();
+		if (anyMounted)
 		{
 			String name = ResourceDir::normalize(filename);
 			if (name != "")
@@ -324,7 +346,9 @@ namespace hltypes
 		{
 			segments += platformCwd;
 		}
+		Mutex::ScopeLock lock(&Resource::mutexMountedArchives);
 		String defaultArchive = Resource::mountedArchives.tryGet("", "");
+		lock.release();
 		if (defaultArchive != "")
 		{
 			segments += defaultArchive;

@@ -266,7 +266,7 @@ namespace hltypes
 			{
 				return false;
 			}
-			hstr realFilename = filename; // _aopen() changes this variables
+			hstr realFilename = filename; // _aopen() changes this variable
 			Mutex::ScopeLock lock(&accessMutex);
 			ArchiveFileHandle* archive = _aopen(realFilename);
 			if (archive == NULL)

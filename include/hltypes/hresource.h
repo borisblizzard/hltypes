@@ -15,6 +15,7 @@
 
 #include "hfbase.h"
 #include "hmap.h"
+#include "hmutex.h"
 #include "hstring.h"
 
 #include "hltypesExport.h"
@@ -88,6 +89,9 @@ namespace hltypes
 
 		/// @brief Defines currently mounted archive filenames and mount paths.
 		static Map<String, String> mountedArchives;
+		/// @brief Mutex for directory entries cache.
+		/// @note This is usually only used when ZIP resources are being used.
+		static Mutex mutexMountedArchives;
 
 		/// @brief Updates internal data size.
 		void _updateDataSize();
