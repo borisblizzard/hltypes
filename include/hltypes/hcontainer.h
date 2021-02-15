@@ -743,18 +743,21 @@ namespace hltypes
 		}
 		/// @brief Randomizes order of elements in Container.
 		/// @note Not using std::random_shuffle() due to issues with std::srand() in some implementations.
-		/// @note This implementation is done in-place in order to avoid creating another object.
+		/// @note This implementation uses Fisher–Yates Shuffle.
 		inline void randomize()
 		{
 			int size = this->size();
 			if (size > 1)
 			{
-				this->add(*this);
-				for_iter (i, 0, size - 1)
+				int j = 0;
+				for_iter_r (i, size, 1)
 				{
-					this->at(i) = this->removeAt(size + hrand(size - i));
+					j = hrand(i + 1);
+					if (i != j)
+					{
+						hswap(this->at(i), this->at(j));
+					}
 				}
-				this->at(size - 1) = this->removeAt(size);
 			}
 		}
 		/// @brief Reverses order of elements.
