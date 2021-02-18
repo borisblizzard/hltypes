@@ -20,6 +20,7 @@
       <PreprocessorDefinitions>_WIN32;WIN32;_WIN64;WIN64;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../..;../../src;../../../include;../../../../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <StringPooling>true</StringPooling>
+      <AdditionalOptions>/w14263 /w14266 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(HLTypesOutputDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
