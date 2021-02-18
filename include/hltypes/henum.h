@@ -109,7 +109,7 @@ public: \
 	__HL_EXPAND_MACRO code \
 protected: \
 	inline classe(unsigned int value) : henum(value) { } \
-	inline hmap<unsigned int, hstr>& _getInstances() const { return _instances; } \
+	inline hmap<unsigned int, hstr>& _getInstances() const override { return _instances; } \
 private: \
 	static hmap<unsigned int, hstr> _instances; \
 	static bool _useDefaultLooseValue; \

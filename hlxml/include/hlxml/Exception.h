@@ -34,7 +34,7 @@ namespace hlxml
 		_XMLException(chstr message, Node* node, const char* file, int line);
 		/// @brief Gets the exception type.
 		/// @return The exception type.
-		inline hstr getType() const { return "XMLException"; }
+		inline hstr getType() const override { return "XMLException"; }
 
 	};
 

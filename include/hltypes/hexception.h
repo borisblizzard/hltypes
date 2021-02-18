@@ -24,7 +24,7 @@
 	{ \
 	public: \
 		_ ## classe(const char* file, int line); \
-		inline hstr getType() const { return #classe; } \
+		inline hstr getType() const override { return #classe; } \
 	};
 
 /// @brief Declares an exception class with 1 argument.
@@ -36,7 +36,7 @@
 	{ \
 	public: \
 		_ ## classe(chstr arg0, const char* file, int line); \
-		inline hstr getType() const { return #classe; } \
+		inline hstr getType() const override { return #classe; } \
 	};
 
 /// @brief Declares an exception class with 2 arguments.
@@ -49,7 +49,7 @@
 	{ \
 	public: \
 		_ ## classe(chstr arg0, chstr arg1, const char* file, int line); \
-		inline hstr getType() const { return #classe; } \
+		inline hstr getType() const override { return #classe; } \
 	};
 
 /// @brief Declares an exception class with 3 arguments.
@@ -63,7 +63,7 @@
 	{ \
 	public: \
 		_ ## classe(chstr arg0, chstr arg1, chstr arg2, const char* file, int line); \
-		inline hstr getType() const { return #classe; } \
+		inline hstr getType() const override { return #classe; } \
 	};
 
 namespace hltypes
@@ -125,7 +125,7 @@ namespace hltypes
 		_FileCouldNotOpenException(const String& filename, bool isResource, const char* sourceFile, int lineNumber);
 		/// @brief Gets the exception type.
 		/// @return The exception type.
-		inline String getType() const { return "FileCouldNotOpenException"; }
+		inline String getType() const override { return "FileCouldNotOpenException"; }
 
 	};
 	/// @brief Alias for simpler code.
@@ -144,7 +144,7 @@ namespace hltypes
 		_FileNotOpenException(const String& filename, const char* sourceFile, int lineNumber);
 		/// @brief Gets the exception type.
 		/// @return The exception type.
-		inline String getType() const { return "FileNotOpenException"; }
+		inline String getType() const override { return "FileNotOpenException"; }
 
 	};
 	/// @brief Alias for simpler code.
@@ -161,7 +161,7 @@ namespace hltypes
 		_FileNotWriteableException(const String& filename, const char* sourceFile, int lineNumber);
 		/// @brief Gets the exception type.
 		/// @return The exception type.
-		inline String getType() const { return "FileNotWriteableException"; }
+		inline String getType() const override { return "FileNotWriteableException"; }
 
 	};
 	/// @brief Alias for simpler code.
@@ -180,7 +180,7 @@ namespace hltypes
 		_ResourceNotExistsException(const String& type, const String& name, const String& container, const char* sourceFile, int lineNumber);
 		/// @brief Gets the exception type.
 		/// @return The exception type.
-		inline String getType() const { return "ResourceNotExistsException"; }
+		inline String getType() const override { return "ResourceNotExistsException"; }
 
 	};
 	/// @brief Alias for simpler code.
@@ -199,7 +199,7 @@ namespace hltypes
 		_ResourceAlreadyExistsException(const String& type, const String& name, const String& container, const char* sourceFile, int lineNumber);
 		/// @brief Gets the exception type.
 		/// @return The exception type.
-		inline String getType() const { return "ResourceAlreadyExistsException"; }
+		inline String getType() const override { return "ResourceAlreadyExistsException"; }
 
 	};
 	/// @brief Alias for simpler code.
@@ -216,7 +216,7 @@ namespace hltypes
 		_ContainerIndexException(int index, const char* sourceFile, int lineNumber);
 		/// @brief Gets the exception type.
 		/// @return The exception type.
-		inline String getType() const { return "ContainerIndexException"; }
+		inline String getType() const override { return "ContainerIndexException"; }
 
 	};
 	/// @brief Alias for simpler code.
@@ -233,7 +233,7 @@ namespace hltypes
 		_ContainerEmptyException(const String& functionName, const char* sourceFile, int lineNumber);
 		/// @brief Gets the exception type.
 		/// @return The exception type.
-		inline String getType() const { return "ContainerEmptyException"; }
+		inline String getType() const override { return "ContainerEmptyException"; }
 
 	};
 	/// @brief Alias for simpler code.
@@ -249,7 +249,7 @@ namespace hltypes
 		_ContainerElementNotFoundException(const char* sourceFile, int lineNumber);
 		/// @brief Gets the exception type.
 		/// @return The exception type.
-		inline String getType() const { return "ContainerElementNotFoundException"; }
+		inline String getType() const override { return "ContainerElementNotFoundException"; }
 
 	};
 	/// @brief Alias for simpler code.
@@ -267,7 +267,7 @@ namespace hltypes
 		_ContainerRangeException(int start, int count, const char* sourceFile, int lineNumber);
 		/// @brief Gets the exception type.
 		/// @return The exception type.
-		inline String getType() const { return "ContainerRangeException"; }
+		inline String getType() const override { return "ContainerRangeException"; }
 
 	};
 	/// @brief Alias for simpler code.
@@ -285,7 +285,7 @@ namespace hltypes
 		_ContainerKeyException(const String& key, const String& container, const char* sourceFile, int lineNumber);
 		/// @brief Gets the exception type.
 		/// @return The exception type.
-		inline String getType() const { return "ContainerKeyException"; }
+		inline String getType() const override { return "ContainerKeyException"; }
 
 	};
 	/// @brief Alias for simpler code.
@@ -302,7 +302,7 @@ namespace hltypes
 		_ObjectCannotCopyException(const String& name, const char* sourceFile, int lineNumber);
 		/// @brief Gets the exception type.
 		/// @return The exception type.
-		inline String getType() const { return "ObjectCannotCopyException"; }
+		inline String getType() const override { return "ObjectCannotCopyException"; }
 
 	};
 	/// @brief Alias for simpler code.
@@ -319,7 +319,7 @@ namespace hltypes
 		_ObjectCannotAssignException(const String& name, const char* sourceFile, int lineNumber);
 		/// @brief Gets the exception type.
 		/// @return The exception type.
-		inline String getType() const { return "ObjectCannotAssignException"; }
+		inline String getType() const override { return "ObjectCannotAssignException"; }
 
 	};
 	/// @brief Defines a enumeration-value-not-exists exception.
@@ -333,7 +333,7 @@ namespace hltypes
 		_EnumerationValueNotExistsException(unsigned int value, const char* sourceFile, int lineNumber);
 		/// @brief Gets the exception type.
 		/// @return The exception type.
-		inline String getType() const { return "EnumerationValueNotExistsException"; }
+		inline String getType() const override { return "EnumerationValueNotExistsException"; }
 
 	};
 	/// @brief Alias for simpler code.
@@ -353,7 +353,7 @@ namespace hltypes
 		_EnumerationValueAlreadyExistsException(unsigned int value, const char* sourceFile, int lineNumber);
 		/// @brief Gets the exception type.
 		/// @return The exception type.
-		inline String getType() const { return "EnumerationValueAlreadyExistsException"; }
+		inline String getType() const override { return "EnumerationValueAlreadyExistsException"; }
 
 	};
 	/// @brief Alias for simpler code.

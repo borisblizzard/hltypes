@@ -12,6 +12,8 @@ add_definitions(
 	-Wall
 	-Wno-parentheses
 	-Wno-overloaded-virtual
+	-Winconsistent-missing-override
+	-Wsuggest-override
 	-Wstrict-overflow=0
 )
 

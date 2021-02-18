@@ -59,25 +59,25 @@ namespace hltypes
 		/// @param[in] count Number of bytes to write.
 		/// @return Number of bytes written.
 		/// @note If return value differs from parameter count, it can indicate a writing error.
-		int writeRaw(void* buffer, int count);
+		int writeRaw(void* buffer, int count) override;
 		/// @brief Writes raw data to the Stream from another Stream.
 		/// @param[in] stream Another Stream.
 		/// @param[in] count Number of bytes to write.
 		/// @return Number of bytes written.
-		int writeRaw(StreamBase& stream, int count);
+		int writeRaw(StreamBase& stream, int count) override;
 		/// @brief Writes raw data to the Stream from another Stream.
 		/// @param[in] stream Another Stream.
 		/// @return Number of bytes written.
-		int writeRaw(StreamBase& stream);
+		int writeRaw(StreamBase& stream) override;
 		/// @brief Writes raw data to the Stream from another Stream.
 		/// @param[in] stream Another Stream.
 		/// @param[in] count Number of bytes to write.
 		/// @return Number of bytes written.
-		int writeRaw(Stream& stream, int count);
+		int writeRaw(Stream& stream, int count) override;
 		/// @brief Writes raw data to the Stream from another Stream.
 		/// @param[in] stream Another Stream.
 		/// @return Number of bytes written.
-		int writeRaw(Stream& stream);
+		int writeRaw(Stream& stream) override;
 		/// @brief Prepares Stream for manual writing without using write_raw() directly.
 		/// @param[in] count Number of bytes to prepare. Stream size is increased if necessary, but contains garbage data.
 		/// @return Number of bytes ready to be written.
@@ -127,28 +127,28 @@ namespace hltypes
 		int64_t capacity;
 
 		/// @brief Updates internal data size.
-		void _updateDataSize();
+		void _updateDataSize() override;
 
 		/// @brief Reads data from the Stream.
 		/// @param[in] buffer Destination data buffer.
 		/// @param[in] count Number of elements to read.
 		/// @return Number of bytes read.
-		int _read(void* buffer, int count);
+		int _read(void* buffer, int count) override;
 		/// @brief Writes data to the Stream.
 		/// @param[in] buffer Source data buffer.
 		/// @param[in] count Number of elements contained in buffer.
 		/// @return Number of bytes written.
-		int _write(const void* buffer, int count);
+		int _write(const void* buffer, int count) override;
 		/// @brief Checks if Stream is open.
 		/// @return True if Stream is open.
-		bool _isOpen() const;
+		bool _isOpen() const override;
 		/// @brief Gets current position in Stream.
 		/// @return Current position in Stream.
-		int64_t _position() const;
+		int64_t _position() const override;
 		/// @brief Seeks to position in Stream.
 		/// @param[in] offset Seeking offset in bytes.
 		/// @param[in] seekMode Seeking mode.
-		bool _seek(int64_t offset, SeekMode seekMode = SeekMode::Current);
+		bool _seek(int64_t offset, SeekMode seekMode = SeekMode::Current) override;
 		/// @brief Resizes internal buffer if necessary.
 		/// @param[in,out] write_size Number of bytes that is needed for the next write.
 		/// @note This does not change the data stream size. Use this to avoid allocation of too much data if not needed.

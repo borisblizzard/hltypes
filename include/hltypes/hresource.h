@@ -38,9 +38,9 @@ namespace hltypes
 		/// @brief Opens a resource file.
 		/// @param[in] filename Name of the resource file (may include path).
 		/// @note If this instance is already working with an opened resource file handle, that resource file handle will be closed.
-		void open(const String& filename);
+		void open(const String& filename) override;
 		/// @brief Closes resource file.
-		void close();
+		void close() override;
 		
 		/// @brief Checks if a resource file exists.
 		/// @param[in] filename Name of the resource file.
@@ -94,28 +94,28 @@ namespace hltypes
 		static Mutex mutexMountedArchives;
 
 		/// @brief Updates internal data size.
-		void _updateDataSize();
+		void _updateDataSize() override;
 
 		/// @brief Reads data from the stream.
 		/// @param[in] buffer Destination data buffer.
 		/// @param[in] count Number of elements to read.
 		/// @return Number of bytes read.
-		int _read(void* buffer, int count);
+		int _read(void* buffer, int count) override;
 		/// @brief Writes data to the stream.
 		/// @param[in] buffer Source data buffer.
 		/// @param[in] count Number of elements contained in buffer.
 		/// @return Number of bytes written.
-		int _write(const void* buffer, int count);
+		int _write(const void* buffer, int count) override;
 		/// @brief Checks if file is open.
 		/// @return True if file is open.
-		bool _isOpen() const;
+		bool _isOpen() const override;
 		/// @brief Gets current position in file.
 		/// @return Current position in file.
-		int64_t _position() const;
+		int64_t _position() const override;
 		/// @brief Seeks to position in file.
 		/// @param[in] offset Seeking offset in bytes.
 		/// @param[in] seekMode Seeking mode.
-		bool _seek(int64_t offset, SeekMode seekMode = SeekMode::Current);
+		bool _seek(int64_t offset, SeekMode seekMode = SeekMode::Current) override;
 		/// @brief Checks if a resource file exists in a ZIP file.
 		/// @param[in] filename Name of the resource file.
 		/// @param[in] caseSensitive Whether to check case sensitive files if file was not found.

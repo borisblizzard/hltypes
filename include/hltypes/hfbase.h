@@ -113,7 +113,7 @@ namespace hltypes
 
 		/// @brief Gets special descriptor.
 		/// @return Special descriptor.
-		String _descriptor() const;
+		String _descriptor() const override;
 
 		/// @brief Opens an OS file.
 		/// @param[in] filename Name of the file (may include path).

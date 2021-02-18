@@ -103,6 +103,11 @@ namespace hltypes
 /// @param[in] name Variable name.
 /// @param[in] capsName Variable name with capital beginning letter.
 #define HL_DEFINE_GET(type, name, capsName) inline type get ## capsName() const { return this->name; }
+/// @brief Utility macro for quick getter definition with override.
+/// @param[in] type Variable type.
+/// @param[in] name Variable name.
+/// @param[in] capsName Variable name with capital beginning letter.
+#define HL_DEFINE_GET_OVERRIDE(type, name, capsName) inline type get ## capsName() const override { return this->name; }
 /// @brief Utility macro for quick getter definition.
 /// @param[in] classe Template class.
 /// @param[in] type1 First template type argument.
@@ -110,16 +115,33 @@ namespace hltypes
 /// @param[in] name Variable name.
 /// @param[in] capsName Variable name with capital beginning letter.
 #define HL_DEFINE_GET2(classe, type1, type2, name, capsName) inline classe<type1, type2> get ## capsName() const { return this->name; }
+/// @brief Utility macro for quick getter definition with override.
+/// @param[in] classe Template class.
+/// @param[in] type1 First template type argument.
+/// @param[in] type2 Second template type argument.
+/// @param[in] name Variable name.
+/// @param[in] capsName Variable name with capital beginning letter.
+#define HL_DEFINE_GET2_OVERRIDE(classe, type1, type2, name, capsName) inline classe<type1, type2> get ## capsName() const override { return this->name; }
 /// @brief Utility macro for quick getter (with "is") definition.
 /// @param[in] name Variable name.
 /// @param[in] capsName Variable name with capital beginning letter.
 /// @note This is meant for use with bool only.
 #define HL_DEFINE_IS(name, capsName) inline bool is ## capsName() const { return this->name; }
+/// @brief Utility macro for quick getter (with "is") definition with override.
+/// @param[in] name Variable name.
+/// @param[in] capsName Variable name with capital beginning letter.
+/// @note This is meant for use with bool only.
+#define HL_DEFINE_IS_OVERRIDE(name, capsName) inline bool is ## capsName() const override { return this->name; }
 /// @brief Utility macro for quick setter definition.
 /// @param[in] type Variable type.
 /// @param[in] name Variable name.
 /// @param[in] capsName Variable name with capital beginning letter.
 #define HL_DEFINE_SET(type, name, capsName) inline void set ## capsName(type const& value) { this->name = value; }
+/// @brief Utility macro for quick setter definition with override.
+/// @param[in] type Variable type.
+/// @param[in] name Variable name.
+/// @param[in] capsName Variable name with capital beginning letter.
+#define HL_DEFINE_SET_OVERRIDE(type, name, capsName) inline void set ## capsName(type const& value) override { this->name = value; }
 /// @brief Utility macro for quick setter definition.
 /// @param[in] classe Template class.
 /// @param[in] type1 First template type argument.
@@ -127,11 +149,23 @@ namespace hltypes
 /// @param[in] name Variable name.
 /// @param[in] capsName Variable name with capital beginning letter.
 #define HL_DEFINE_SET2(classe, type1, type2, name, capsName) inline void set ## capsName(classe<type1, type2> const& value) { this->name = value; }
+/// @brief Utility macro for quick setter definition with override.
+/// @param[in] classe Template class.
+/// @param[in] type1 First template type argument.
+/// @param[in] type2 Second template type argument.
+/// @param[in] name Variable name.
+/// @param[in] capsName Variable name with capital beginning letter.
+#define HL_DEFINE_SET2_OVERRIDE(classe, type1, type2, name, capsName) inline void set ## capsName(classe<type1, type2> const& value) override { this->name = value; }
 /// @brief Utility macro for quick getter and setter definition.
 /// @param[in] type Variable type.
 /// @param[in] name Variable name.
 /// @param[in] capsName Variable name with capital beginning letter.
 #define HL_DEFINE_GETSET(type, name, capsName) HL_DEFINE_GET(type, name, capsName) HL_DEFINE_SET(type, name, capsName)
+/// @brief Utility macro for quick getter and setter definition with override.
+/// @param[in] type Variable type.
+/// @param[in] name Variable name.
+/// @param[in] capsName Variable name with capital beginning letter.
+#define HL_DEFINE_GETSET_OVERRIDE(type, name, capsName) HL_DEFINE_GET_OVERRIDE(type, name, capsName) HL_DEFINE_SET_OVERRIDE(type, name, capsName)
 /// @brief Utility macro for quick getter and setter definition.
 /// @param[in] classe Template class.
 /// @param[in] type1 First template type argument.
@@ -139,11 +173,23 @@ namespace hltypes
 /// @param[in] name Variable name.
 /// @param[in] capsName Variable name with capital beginning letter.
 #define HL_DEFINE_GETSET2(classe, type1, type2, name, capsName) HL_DEFINE_GET2(classe, type1, type2, name, capsName) HL_DEFINE_SET2(classe, type1, type2, name, capsName)
+/// @brief Utility macro for quick getter and setter definition with override.
+/// @param[in] classe Template class.
+/// @param[in] type1 First template type argument.
+/// @param[in] type2 Second template type argument.
+/// @param[in] name Variable name.
+/// @param[in] capsName Variable name with capital beginning letter.
+#define HL_DEFINE_GETSET2_OVERRIDE(classe, type1, type2, name, capsName) HL_DEFINE_GET2_OVERRIDE(classe, type1, type2, name, capsName) HL_DEFINE_SET2_OVERRIDE(classe, type1, type2, name, capsName)
 /// @brief Utility macro for quick getter (with "is") and setter definition.
 /// @param[in] name Variable name.
 /// @param[in] capsName Variable name with capital beginning letter.
 /// @note This is meant for use with bool only.
 #define HL_DEFINE_ISSET(name, capsName) HL_DEFINE_IS(name, capsName) HL_DEFINE_SET(bool, name, capsName)
+/// @brief Utility macro for quick getter (with "is") and setter definition with override.
+/// @param[in] name Variable name.
+/// @param[in] capsName Variable name with capital beginning letter.
+/// @note This is meant for use with bool only.
+#define HL_DEFINE_ISSET_OVERRIDE(name, capsName) HL_DEFINE_IS_OVERRIDE(name, capsName) HL_DEFINE_SET_OVERRIDE(bool, name, capsName)
 
 /// @brief Utility macro for local lambda classes.
 /// @param[in] name Class name.
