@@ -981,8 +981,9 @@ namespace hltypes
 		/// @return A unicode (unsigned int) string.
 		std::ustring uStr() const;
 		/// @brief Creates a wchar string.
+		/// @param[in] ignoreErrors Ignores conversion errors and uses replacement chars.
 		/// @return A wchar string.
-		std::wstring wStr() const;
+		std::wstring wStr(bool ignoreErrors = false) const;
 		/// @brief Converts first UTF8 character into the corresponding character code.
 		/// @param[in] index The byte position of the first character in the string.
 		/// @param[out] byteCount Length of UTF8 character in bytes.

@@ -2088,9 +2088,12 @@ namespace hltypes
 		return result;
 	}
 
-	std::wstring String::wStr() const
+	std::wstring String::wStr(bool ignoreErrors) const
 	{
 		std::wstring result;
+#ifdef _DEBUG
+		String debugResult;
+#endif
 #ifdef __APPLE__ // bugfix for apple llvm compiler, has allocation problems in std::string with unsigned int combination
 		if (stdstr::size() == 0)
 		{
@@ -2107,21 +2110,34 @@ namespace hltypes
 		int size = 0;
 #ifdef _DEBUG
 		bool checked = false;
+		hstr hexCode;
 #endif
 		while (string[i] != 0)
 		{
 			_TO_UNICODE_FAST(code, string, i, size);
 #ifdef _DEBUG
-			if (!checked && code > 0xFFFF)
+			if (code > WCHAR_MAX && !ignoreErrors)
 			{
-				hltypes::_platformPrint(logTag, "String uses Unicode characters above 0xFFFF:", 1000);
-				hltypes::_platformPrint(logTag, *this, 1000); // usually causes a stack overflow
 				checked = true;
+				hexCode = hsprintf("\\x%X", code);
+				debugResult += hexCode;
+				result += hexCode.wStr().c_str();
+			}
+			else
+			{
+				debugResult += hstr::fromUnicode(code);
+				result += code;
 			}
 #endif
-			result += code;
 			i += size;
 		}
+#ifdef _DEBUG
+		if (checked)
+		{
+			hltypes::_platformPrint(logTag, "String uses Unicode characters above 0xFFFF:", 1000);
+			hltypes::_platformPrint(logTag, debugResult, 1000); // usually causes a stack overflow
+		}
+#endif
 		return result;
 	}
 
