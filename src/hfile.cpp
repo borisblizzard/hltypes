@@ -175,7 +175,7 @@ namespace hltypes
 	{
 		String oldName = Dir::normalize(oldFilename);
 		String newName = Dir::normalize(newFilename);
-		if (!File::exists(oldName) || !overwrite && File::exists(newName))
+		if (!File::exists(oldName) || (!overwrite && File::exists(newName)))
 		{
 			return false;
 		}
