@@ -2128,6 +2128,8 @@ namespace hltypes
 				debugResult += hstr::fromUnicode(code);
 				result += code;
 			}
+#else
+			result += code;
 #endif
 			i += size;
 		}
