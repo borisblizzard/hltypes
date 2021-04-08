@@ -34,14 +34,17 @@ namespace hltypes
 		{
 			normalizedPath += "/";
 		}
-		Mutex::ScopeLock lock(&Resource::mutexMountedArchives);
+		Mutex::ScopeLock lockMountedArchives(&Resource::mutexMountedArchives);
+#ifdef _ZIPRESOURCE
+		Mutex::ScopeLock lockCachedDirectories(&ResourceDir::mutexCacheDirectories);
+		Mutex::ScopeLock lockCachedFiles(&ResourceDir::mutexCacheFiles);
+#endif
 		if (Resource::mountedArchives.hasKey(normalizedPath))
 		{
 			Log::errorf(logTag, "Cannot mount archive filename '%s' to path '%s', the path is already mounted!", archiveFilename.cStr(), path.cStr());
 			return false;
 		}
 		Array<String> mounts = Resource::mountedArchives.keys() / "";
-		lock.release();
 		foreach (String, it, mounts)
 		{
 			if (normalizedPath.startsWith(*it))
@@ -72,16 +75,10 @@ namespace hltypes
 			return false;
 		}
 		// extra mounting has to clear directory / file caches
-		lock.acquire(&ResourceDir::mutexCacheDirectories);
 		ResourceDir::cacheDirectories.clear();
-		lock.release();
-		lock.acquire(&ResourceDir::mutexCacheFiles);
 		ResourceDir::cacheFiles.clear();
-		lock.release();
 #endif
-		lock.acquire(&Resource::mutexMountedArchives);
 		Resource::mountedArchives[normalizedPath] = normalizedArchiveFilename;
-		lock.release();
 		static bool firstMount = true;
 		if (firstMount)
 		{
@@ -106,13 +103,16 @@ namespace hltypes
 		{
 			normalizedPath += "/";
 		}
-		Mutex::ScopeLock lock(&Resource::mutexMountedArchives);
+		Mutex::ScopeLock lockMountedArchives(&Resource::mutexMountedArchives);
+#ifdef _ZIPRESOURCE
+		Mutex::ScopeLock lockCachedDirectories(&ResourceDir::mutexCacheDirectories);
+		Mutex::ScopeLock lockCachedFiles(&ResourceDir::mutexCacheFiles);
+#endif
 		if (!Resource::mountedArchives.hasKey(normalizedPath))
 		{
 			Log::errorf(logTag, "Cannot unmount path '%s', the path is not mounted!", path.cStr());
 			return false;
 		}
-		lock.release();
 #ifdef _ZIPRESOURCE
 		if (!zip::unmountArchive(normalizedPath))
 		{
@@ -120,14 +120,9 @@ namespace hltypes
 			return false;
 		}
 		// unmounting has to clear directory / file caches
-		lock.acquire(&ResourceDir::mutexCacheDirectories);
 		ResourceDir::cacheDirectories.clear();
-		lock.release();
-		lock.acquire(&ResourceDir::mutexCacheFiles);
 		ResourceDir::cacheFiles.clear();
-		lock.release();
 #endif
-		lock.acquire(&Resource::mutexMountedArchives);
 		Resource::mountedArchives.removeKey(normalizedPath);
 		return true;
 	}
