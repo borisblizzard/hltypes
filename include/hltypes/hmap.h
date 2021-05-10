@@ -20,13 +20,13 @@
 #include "hstring.h"
 
 /// @brief Provides a simpler syntax to iterate through a Map.
-#define foreach_map(typeKey, typeValue, name, container) for (hltypes::Map< typeKey, typeValue >::iterator_t name = (container).begin(), name ## End = (container).end(); name != name ## End; ++name)
+#define foreach_map(typeKey, typeValue, name, container) for (typename hltypes::Map< typeKey, typeValue >::iterator_t name = (container).begin(), name ## End = (container).end(); name != name ## End; ++name)
 /// @brief Provides a simpler syntax to iterate through a Map.
-#define foreachc_map(typeKey, typeValue, name, container) for (hltypes::Map< typeKey, typeValue >::const_iterator_t name = (container).begin(), name ## End = (container).end(); name != name ## End; ++name)
+#define foreachc_map(typeKey, typeValue, name, container) for (typename hltypes::Map< typeKey, typeValue >::const_iterator_t name = (container).begin(), name ## End = (container).end(); name != name ## End; ++name)
 /// @brief Provides a simpler syntax to iterate through a Map with String as key.
-#define foreach_m(type, name, container) for (hltypes::Map< hltypes::String, type >::iterator_t name = (container).begin(), name ## End = (container).end(); name != name ## End; ++name)
+#define foreach_m(type, name, container) for (typename hltypes::Map< hltypes::String, type >::iterator_t name = (container).begin(), name ## End = (container).end(); name != name ## End; ++name)
 /// @brief Provides a simpler syntax to iterate through a Map with String as key.
-#define foreachc_m(type, name, container) for (hltypes::Map< hltypes::String, type >::const_iterator_t name = (container).begin(), name ## End = (container).end(); name != name ## End; ++name)
+#define foreachc_m(type, name, container) for (typename hltypes::Map< hltypes::String, type >::const_iterator_t name = (container).begin(), name ## End = (container).end(); name != name ## End; ++name)
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define __foreach_this_map_it(name) for (const_iterator_t name = this->begin(), name ## End = this->end(); name != name ## End; ++name)

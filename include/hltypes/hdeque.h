@@ -21,13 +21,13 @@
 #include "hstring.h"
 
 /// @brief Provides a simpler syntax to iterate through a Deque.
-#define foreach_q(type, name, container) for (hltypes::Deque< type >::iterator_t name = (container).begin(), name ## End = (container).end(); name != name ## End; ++name)
+#define foreach_q(type, name, container) for (typename hltypes::Deque< type >::iterator_t name = (container).begin(), name ## End = (container).end(); name != name ## End; ++name)
 /// @brief Provides a simpler syntax to iterate through a Deque.
-#define foreachc_q(type, name, container) for (hltypes::Deque< type >::const_iterator_t name = (container).begin(), name ## End = (container).end(); name != name ## End; ++name)
+#define foreachc_q(type, name, container) for (typename hltypes::Deque< type >::const_iterator_t name = (container).begin(), name ## End = (container).end(); name != name ## End; ++name)
 /// @brief Provides a simpler syntax to reverse iterate through a Deque.
-#define foreach_qr(type, name, container) for (hltypes::Deque< type >::riterator_t name = (container).rbegin(), name ## End = (container).rend(); name != name ## End; ++name)
+#define foreach_qr(type, name, container) for (typename hltypes::Deque< type >::riterator_t name = (container).rbegin(), name ## End = (container).rend(); name != name ## End; ++name)
 /// @brief Provides a simpler syntax to reverse iterate through a Deque.
-#define foreachc_qr(type, name, container) for (hltypes::Deque< type >::const_riterator_t name = (container).rbegin(), name ## End = (container).rend(); name != name ## End; ++name)
+#define foreachc_qr(type, name, container) for (typename hltypes::Deque< type >::const_riterator_t name = (container).rbegin(), name ## End = (container).rend(); name != name ## End; ++name)
 
 namespace hltypes
 {

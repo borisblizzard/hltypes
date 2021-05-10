@@ -21,7 +21,7 @@
 #include "hlxmlExport.h"
 
 /// @brief Provides a simpler syntax to iterate through the nodes of a document.
-#define foreach_xmlnode(nodeName, rootName) foreach (hlxml::Node*, nodeName, rootName->children)
+#define foreach_xmlnode(nodeName, rootName) foreach (typename hlxml::Node*, nodeName, rootName->children)
 
 namespace hlxml
 {
